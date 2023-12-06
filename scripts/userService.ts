@@ -9,12 +9,9 @@ export class UserService {
   static async login(id: string, key: string): Promise<boolean> {
     UserService.id = id;
     try {
-      const result = await Axios.get("/Username", {
+      const result = await Axios.get("/inventory", {
         headers: {
           "Ocp-Apim-Subscription-Key": key,
-        },
-        params: {
-          id,
         },
       });
       if (result.status === 200) {

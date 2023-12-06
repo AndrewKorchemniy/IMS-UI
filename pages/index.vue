@@ -46,10 +46,6 @@ import { onMounted, ref, watch } from "vue";
 import { StorageService } from "../scripts/storageService";
 import { UserService } from "../scripts/userService";
 
-if (UserService.isLoggedIn) {
-  navigateTo("/inventory");
-}
-
 const id = ref("");
 const key = ref("");
 
@@ -84,10 +80,6 @@ const loginButtonColor = computed(() => {
 });
 
 async function loginAsync() {
-  // UserService.id = id.value;
-  // UserService.key = key.value;
-  // UserService.isLoggedIn = true;
-  // navigateTo("/inventory");
   if (state.value !== LoginState.None) {
     return;
   }
