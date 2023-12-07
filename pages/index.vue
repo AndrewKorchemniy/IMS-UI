@@ -102,17 +102,20 @@ async function loginAsync() {
     return;
   }
   state.value = LoginState.Waiting;
-  await new Promise((resolve) => setTimeout(resolve, 250));
   if (await UserService.login(company.value, key.value)) {
-    state.value = LoginState.Success;
     setTimeout(() => {
-      navigateTo("/company");
-    }, 500);
+      state.value = LoginState.Success;
+      setTimeout(() => {
+        navigateTo("/company");
+      }, 250);
+    }, 250);
   } else {
-    state.value = LoginState.Failure;
     setTimeout(() => {
-      state.value = LoginState.None;
-    }, 2000);
+      state.value = LoginState.Failure;
+      setTimeout(() => {
+        state.value = LoginState.None;
+      }, 2000);
+    }, 250);
   }
 }
 </script>
