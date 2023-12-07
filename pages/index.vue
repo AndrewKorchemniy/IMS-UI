@@ -2,10 +2,16 @@
   <v-container class="fill-height" fluid>
     <v-row>
       <v-col>
-        <v-sheet border="md" class="pa-6 mx-auto rounded-lg" max-width="400">
+        <v-sheet
+          border="md"
+          class="pa-6 pt-5 mx-auto rounded-lg shadow"
+          max-width="400"
+        >
+          <p class="text-h5 font-weight-bold mb-4">Sign In</p>
           <v-text-field
-            label="ID"
-            v-model="id"
+            autofocus
+            label="Company"
+            v-model="company"
             variant="outlined"
           ></v-text-field>
           <v-text-field
@@ -21,17 +27,29 @@
             variant="flat"
             @click="loginAsync"
           >
-            <v-icon v-if="state === LoginState.None" left size="x-large"
+            <v-icon
+              v-if="state === LoginState.None"
+              left
+              size="x-large"
+              class="glow-dark"
               >mdi-login</v-icon
             >
             <v-progress-circular
               v-else-if="state === LoginState.Waiting"
               indeterminate
             ></v-progress-circular>
-            <v-icon v-else-if="state === LoginState.Success" left size="x-large"
+            <v-icon
+              v-else-if="state === LoginState.Success"
+              left
+              size="x-large"
+              class="glow-dark"
               >mdi-check</v-icon
             >
-            <v-icon v-else-if="state === LoginState.Failure" left size="x-large"
+            <v-icon
+              v-else-if="state === LoginState.Failure"
+              left
+              size="x-large"
+              class="glow-dark"
               >mdi-close</v-icon
             >
           </v-btn>
@@ -46,14 +64,14 @@ import { onMounted, ref, watch } from "vue";
 import { StorageService } from "../scripts/storageService";
 import { UserService } from "../scripts/userService";
 
-const id = ref("");
+const company = ref("");
 const key = ref("");
 
 onMounted(() => {
-  id.value = StorageService.getId();
+  company.value = StorageService.getId();
 });
 
-watch(id, (newId) => {
+watch(company, (newId) => {
   StorageService.setId(newId);
 });
 
@@ -85,10 +103,10 @@ async function loginAsync() {
   }
   state.value = LoginState.Waiting;
   await new Promise((resolve) => setTimeout(resolve, 250));
-  if (await UserService.login(id.value, key.value)) {
+  if (await UserService.login(company.value, key.value)) {
     state.value = LoginState.Success;
     setTimeout(() => {
-      navigateTo("/inventory");
+      navigateTo("/company");
     }, 500);
   } else {
     state.value = LoginState.Failure;
@@ -98,3 +116,7 @@ async function loginAsync() {
   }
 }
 </script>
+
+<style scoped lang="css">
+@import "../assets/styles/main.css";
+</style>
