@@ -200,19 +200,25 @@ async function GetItems() {
 }
 
 async function DeleteItem(itemId: string) {
-  overlay.value = true;
-  const result = await InventoryService.DeleteItem(
-    UserService.company,
-    UserService.inventory,
-    UserService.key,
-    itemId
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this item?"
   );
-  if (!result) {
-    alert("Failed to delete item.");
-  } else {
-    await GetItems();
+
+  if (confirmDelete) {
+    overlay.value = true;
+    const result = await InventoryService.DeleteItem(
+      UserService.company,
+      UserService.inventory,
+      UserService.key,
+      itemId
+    );
+    if (!result) {
+      alert("Failed to delete item.");
+    } else {
+      await GetItems();
+    }
+    overlay.value = false;
   }
-  overlay.value = false;
 }
 </script>
 
