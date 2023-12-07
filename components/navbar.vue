@@ -1,10 +1,9 @@
-import type { UserService } from '~/scripts/userService';
 <template>
   <v-sheet
     border="md"
     class="pa-4 pl-6 mx-auto rounded-lg w-100 d-flex aligned-items-center shadow"
   >
-    <h1 v-if="UserService.inventory">
+    <h1 v-if="route.path === '/inventory'">
       /{{ UserService.company }}/{{ UserService.inventory }}
     </h1>
     <h1 v-else>/{{ UserService.company }}</h1>
@@ -22,6 +21,9 @@ import type { UserService } from '~/scripts/userService';
 
 <script setup lang="ts">
 import { UserService } from "~/scripts/userService";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 function logout() {
   UserService.isLoggedIn = false;

@@ -7,7 +7,7 @@
     </v-row>
     <v-row class="px-3">
       <v-sheet border="md" class="pa-4 mt-1 mx-auto rounded-lg w-100 shadow">
-        <v-table class="w-100" hover striped>
+        <v-table class="w-100 row-pointer" hover striped>
           <thead>
             <tr>
               <th class="text-left" style="width: 0">
@@ -23,6 +23,7 @@
             <tr
               v-for="inventory in CompanyService.inventories"
               :key="inventory.id"
+              @click="SelectInventory(inventory.name)"
             >
               <td>{{ inventory.name }}</td>
             </tr>
@@ -86,6 +87,7 @@
 import { UserService } from "~/scripts/userService";
 import navbar from "~/components/navbar.vue";
 import { CompanyService } from "~/scripts/companyService";
+import { InventoryService } from "~/scripts/inventoryService";
 
 const dialog = ref(false);
 const overlay = ref(false);
@@ -93,6 +95,16 @@ const newCompanyName = ref("");
 
 if (!UserService.isLoggedIn) {
   navigateTo("/");
+}
+
+async function SelectInventory(inventoryName: string) {
+  UserService.inventory = inventoryName;
+  await InventoryService.GetUsers(
+    UserService.company,
+    UserService.inventory,
+    UserService.key
+  );
+  navigateTo("/inventory");
 }
 
 async function AddIventory() {
