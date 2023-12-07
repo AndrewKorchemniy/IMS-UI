@@ -7,14 +7,14 @@
     </v-row>
     <v-row class="px-3">
       <v-sheet border="md" class="pa-4 mt-1 mx-auto rounded-lg w-100 shadow">
-        <v-table class="w-100" hover striped>
+        <v-table class="w-100 row-pointer" hover striped>
           <thead>
             <tr>
               <th class="text-left" style="width: 0">
                 <p
                   class="text-h5 text-decoration-underline font-weight-bold mb-4"
                 >
-                  Usernames
+                  Users
                 </p>
               </th>
             </tr>
@@ -36,7 +36,7 @@
               v-bind="props"
               class="text-h6 mt-6 mb-2 ml-2"
               variant="flat"
-              color="blue-grey-darken-1"
+              color="light-green-darken-2"
             >
               <v-icon size="x-large" class="glow">mdi-plus</v-icon>
             </v-btn>
@@ -66,13 +66,26 @@
             </v-btn>
           </v-sheet>
         </v-dialog>
-        <v-overlay :model-value="overlay" class="align-center justify-center">
+        <v-overlay
+          :model-value="overlay"
+          overlay-opacity="50"
+          class="align-center justify-center"
+        >
           <v-progress-circular
             color="primary"
             indeterminate
             size="64"
           ></v-progress-circular>
         </v-overlay>
+
+        <v-btn
+          class="text-h6 mt-6 mb-2 ml-4"
+          variant="flat"
+          color="blue-grey-darken-1"
+          @click="GetUsers()"
+        >
+          <v-icon class="glow">mdi-refresh</v-icon>
+        </v-btn>
       </v-sheet>
     </v-row>
   </v-container>

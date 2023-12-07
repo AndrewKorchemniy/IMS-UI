@@ -115,4 +115,33 @@ export class InventoryService {
     }
     return false;
   }
+
+  static async DeleteItem(
+    company: string,
+    inventory: string,
+    key: string,
+    itemId: string
+  ): Promise<boolean> {
+    try {
+      const result = await Axios.delete(
+        `/inventories/${company}/${inventory}/items`,
+        {
+          headers: {
+            "Ocp-Apim-Subscription-Key": key,
+          },
+          params: {
+            id: itemId,
+          },
+        }
+      );
+      if (result.status === 200) {
+        InventoryService.items = result.data;
+        return true;
+      }
+      console.error(result.statusText);
+    } catch (error) {
+      console.error(error);
+    }
+    return false;
+  }
 }

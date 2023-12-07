@@ -36,7 +36,7 @@
               v-bind="props"
               class="text-h6 mt-6 mb-2 ml-2"
               variant="flat"
-              color="blue-grey-darken-1"
+              color="light-green-darken-2"
             >
               <v-icon size="x-large" class="glow">mdi-plus</v-icon>
             </v-btn>
@@ -78,6 +78,15 @@
             size="64"
           ></v-progress-circular>
         </v-overlay>
+
+        <v-btn
+          class="text-h6 mt-6 mb-2 ml-4"
+          variant="flat"
+          color="blue-grey-darken-1"
+          @click="GetInventories()"
+        >
+          <v-icon class="glow">mdi-refresh</v-icon>
+        </v-btn>
       </v-sheet>
     </v-row>
   </v-container>

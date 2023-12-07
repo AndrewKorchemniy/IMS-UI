@@ -44,3 +44,8 @@ tbody tr:nth-of-type(odd) {
 .row-pointer:deep() tbody tr :hover {
   cursor: pointer;
 }
+
+.w-0 {
+  width: 0 !important;
+  white-space: nowrap;
+}

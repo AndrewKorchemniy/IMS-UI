@@ -4,11 +4,11 @@ export class Item {
   inventoryName = "";
   companyName = "";
   manufactureName = "";
-  quantity = 0.0;
+  quantity = 1.0;
   quantityRemaining = 0.0;
-  quantityUnit = "";
-  dateIntroduced = "";
-  dateExpired = "";
+  quantityUnit = "Weight (kg)";
+  dateIntroduced = new Date();
+  dateExpired = new Date();
   location = "";
   isInspected = false;
   lotNumber = "";
