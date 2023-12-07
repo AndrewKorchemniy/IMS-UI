@@ -25,6 +25,8 @@
               <th class="w-0 text-h6 glow">Lot</th>
               <th class="w-0 text-h6 glow">Location</th>
               <th class="w-0 text-h6 glow">Inspected</th>
+              <th class="w-0 text-h6 glow">Quantity</th>
+              <th class="w-0 text-h6 glow">Introduced</th>
               <th></th>
             </tr>
             <tr v-for="item in InventoryService.items" :key="item.id">
@@ -32,6 +34,13 @@
               <td class="w-0">{{ item.lotNumber }}</td>
               <td class="w-0">{{ item.location }}</td>
               <td class="w-0">{{ item.isInspected }}</td>
+              <td class="w-0">
+                {{ item.quantityRemaining }}
+                {{
+                  item.quantityUnit.replace("Weight ", "").replace("Count", "")
+                }}
+              </td>
+              <td class="w-0">{{ item.dateIntroduced }}</td>
               <td>
                 <v-btn
                   color="red-darken-4"
