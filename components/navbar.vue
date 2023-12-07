@@ -3,10 +3,8 @@
     border="md"
     class="pa-4 pl-6 mx-auto rounded-lg w-100 d-flex aligned-items-center shadow"
   >
-    <h1 v-if="route.path === '/inventory'">
-      /{{ UserService.company }}/{{ UserService.inventory }}
-    </h1>
-    <h1 v-else>/{{ UserService.company }}</h1>
+    <h1 v-if="route.path === '/company'">/{{ UserService.company }}</h1>
+    <h1 v-else>/{{ UserService.company }}/{{ UserService.inventory }}</h1>
     <v-spacer />
     <v-btn
       class="text-black shadow-xsm"

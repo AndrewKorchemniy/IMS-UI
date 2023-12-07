@@ -14,18 +14,14 @@
                 <p
                   class="text-h5 text-decoration-underline font-weight-bold mb-4"
                 >
-                  Usernames
+                  Items
                 </p>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="user in InventoryService.users"
-              :key="user.id"
-              @click="SelectUser(user.name)"
-            >
-              <td>{{ user.name }}</td>
+            <tr v-for="item in InventoryService.items" :key="item.id">
+              <td>{{ item.name }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -46,10 +42,10 @@
             class="pa-6 pt-5 mx-auto rounded-lg shadow"
             width="400"
           >
-            <p class="text-h5 font-weight-bold mb-4">Create User</p>
+            <p class="text-h5 font-weight-bold mb-4">Add Item</p>
             <v-text-field
-              label="User Name"
-              v-model="newUserName"
+              label="Item Name"
+              v-model="newItem.name"
               variant="outlined"
               width="400px"
             ></v-text-field>
@@ -61,7 +57,7 @@
             >
               Close
             </v-btn>
-            <v-btn color="red" class="glow" variant="flat" @click="AddUser()">
+            <v-btn color="red" class="glow" variant="flat" @click="AddItem()">
               Create
             </v-btn>
           </v-sheet>
@@ -82,49 +78,41 @@
 import { UserService } from "~/scripts/userService";
 import navbar from "~/components/navbar.vue";
 import { InventoryService } from "~/scripts/inventoryService";
+import { Item } from "~/scripts/models/item";
 
 const dialog = ref(false);
 const overlay = ref(false);
-const newUserName = ref("");
+var newItem = reactive(new Item());
 
 if (!UserService.isLoggedIn) {
   navigateTo("/");
 }
 
-async function SelectUser(username: string) {
-  UserService.username = username;
-  await InventoryService.GetItems(
-    UserService.company,
-    UserService.inventory,
-    UserService.username,
-    UserService.key
-  );
-  navigateTo("/items");
-}
-
-async function AddUser() {
+async function AddItem() {
   overlay.value = true;
-  const result = await InventoryService.AddUser(
+  const result = await InventoryService.AddItem(
     UserService.company,
     UserService.inventory,
     UserService.key,
-    newUserName.value
+    newItem
   );
   if (!result) {
-    alert("Failed to add user.");
+    alert("Failed to add item.");
   } else {
-    await GetUsers();
+    newItem = reactive(new Item());
+    await GetItems();
   }
   overlay.value = false;
   dialog.value = false;
 }
 
-async function GetUsers() {
+async function GetItems() {
   overlay.value = true;
-  await InventoryService.GetUsers(
+  await InventoryService.GetItems(
     UserService.company,
     UserService.inventory,
-    UserService.key
+    UserService.key,
+    UserService.username
   );
   overlay.value = false;
 }
